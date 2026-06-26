@@ -1,0 +1,134 @@
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.3
+Run started:2026-06-19 17:54:15.738031+00:00
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'sd-prod-7f1a9c3e2b'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: supportdesk-app/app.py:20:11
+19	app = Flask(__name__)
+20	app.config["SECRET_KEY"] = "sd-prod-7f1a9c3e2b"
+21	app.config["ENV_MODE"] = os.environ.get("SUPPORTDESK_ENV", "production")
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'demo-sandbox-9f3a21'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: supportdesk-app/app.py:25:23
+24	
+25	ANALYTICS_DEMO_TOKEN = "demo-sandbox-9f3a21"
+26	
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b307-eval
+   Location: supportdesk-app/app.py:164:16
+163	    try:
+164	        score = eval(formula)
+165	    except Exception as exc:
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b605_start_process_with_a_shell.html
+   Location: supportdesk-app/app.py:191:13
+190	    host = request.args.get("host", "127.0.0.1")
+191	    output = os.popen("ping -n 1 " + host).read()
+192	    return "<pre>" + output + "</pre>"
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b605_start_process_with_a_shell.html
+   Location: supportdesk-app/app.py:203:13
+202	        return jsonify({"error": "host must be a literal IP address"}), 400
+203	    output = os.popen("ping -n 1 " + host).read()
+204	    return "<pre>" + output + "</pre>"
+
+--------------------------------------------------
+>> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
+   Severity: High   Confidence: Medium
+   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b201_flask_debug_true.html
+   Location: supportdesk-app/app.py:220:4
+219	        os.makedirs(ATTACHMENTS_DIR)
+220	    app.run(debug=True, host="0.0.0.0", port=5050)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: supportdesk-app/app.py:220:29
+219	        os.makedirs(ATTACHMENTS_DIR)
+220	    app.run(debug=True, host="0.0.0.0", port=5050)
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: supportdesk-app/models.py:117:10
+116	    conn = get_connection()
+117	    sql = "SELECT * FROM tickets WHERE subject LIKE '%" + term + "%'"
+118	    rows = conn.execute(sql).fetchall()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: supportdesk-app/models.py:135:10
+134	    conn = get_connection()
+135	    sql = "SELECT * FROM tickets WHERE status = '{}'".format(column)
+136	    rows = conn.execute(sql).fetchall()
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: supportdesk-app/utils.py:7:11
+6	def hash_password(password):
+7	    return hashlib.md5(password.encode()).hexdigest()
+8	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: supportdesk-app/utils.py:15:11
+14	def fingerprint_bytes(data):
+15	    return hashlib.md5(data).hexdigest()
+16	
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 370
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 2
+		Medium: 4
+		High: 5
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 2
+		Medium: 4
+		High: 5
+Files skipped (0):
